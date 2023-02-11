@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import User
+from  django.contrib.auth.models import User
 
 from team.models import Team
 
@@ -19,7 +19,7 @@ class Lead(models.Model):
     lost = 'lost'
 
     choices_status = (
-        (new, 'New'),
+        (new,'New'),
         (contacted, 'Contacted'),
         (won, 'Won'),
         (lost, 'Lost'),
@@ -36,9 +36,6 @@ class Lead(models.Model):
     created_by = models.ForeignKey(User, related_name='clients', on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)
-
-    class Meta:
-        ordering = ('name',)
 
     def __str__(self):
         return self.name
