@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from .models import Userprofile
+from team.models import Team
 
 
 def signup(request):
@@ -22,4 +23,7 @@ def signup(request):
 
 @login_required
 def my_account(request):
-    return render(request, 'userprofile/myaccount.html')
+    team = Team.objects.filter(created_by= request.user)[0]
+    return render(request, 'userprofile/myaccount.html',{
+        'team': team
+    })
