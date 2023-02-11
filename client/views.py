@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
 from .forms import AddClientForm
-from .models import Client
+from .models import Client, Team
 
 @login_required
 def clients_list(request):
@@ -48,8 +48,10 @@ def add_client(request):
         form = AddClientForm(request.POST)
 
         if form.is_valid():
+            team = Team.objects.filter(created_by=request.user)[0]
             client = form.save(commit=False)
             client.created_by = request.user
+            client.team = team
             client.save()
             messages.success(request, 'The client was created.')
             return redirect('clients_list')
